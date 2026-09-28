@@ -1,0 +1,23 @@
+.git
+.github
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.ruff_cache
+.mypy_cache
+
+notebooks/
+tests/
+training/
+scripts/
+data/
+
+# Legacy training artifacts: 42 MB that the runtime never opens.
+artifacts/*.keras
+artifacts/*.pkl
+artifacts/*.onnx
+artifacts/training_report.json
+
+*.md
+!README.md

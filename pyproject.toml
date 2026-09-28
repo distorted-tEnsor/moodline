@@ -1,0 +1,37 @@
+[project]
+name = "moodline"
+version = "2.0.0"
+description = "Emotion classification API — PyTorch bidirectional GRU behind FastAPI"
+requires-python = ">=3.10"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+addopts = "-q --strict-markers"
+filterwarnings = [
+    "ignore::DeprecationWarning:google._upb._message",
+    "ignore:.*quantize_per_tensor.*:UserWarning",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py310"
+exclude = ["notebooks"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "C4", "RUF"]
+ignore = ["E501", "B008"]  # B008: FastAPI's Depends() in defaults is idiomatic
+
+[tool.ruff.lint.per-file-ignores]
+# The tokenizer deliberately matches curly apostrophes; the tests feed them in.
+"app/tokenizer.py" = ["RUF001"]
+"tests/*" = ["E402", "RUF001"]
+"scripts/*" = ["E402"]
+"training/*" = ["E402"]
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+warn_unused_ignores = true

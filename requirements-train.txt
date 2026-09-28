@@ -1,0 +1,6 @@
+# Dependencies for training/train.py and scripts/evaluate.py.
+-r requirements.txt
+
+scikit-learn>=1.4
+datasets>=2.19        # only to pull dair-ai/emotion; --data-dir works without it
+matplotlib>=3.8       # optional, for plotting the training report

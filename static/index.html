@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Moodline — read the emotion in your words</title>
+<meta name="description" content="Type a sentence and watch a bidirectional GRU read the emotion inside it.">
+<meta name="color-scheme" content="dark">
+<meta name="theme-color" content="#0e0f14">
+
+<link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500;1,9..144,600&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="grain" aria-hidden="true"></div>
+
+<div class="app">
+
+  <header class="topbar">
+    <div class="brand">
+      <span class="brand-mark" id="statusDot" aria-hidden="true"></span>
+      <span class="brand-name">Moodline</span>
+    </div>
+    <p class="brand-tag">an instrument that reads the mood inside a sentence</p>
+  </header>
+
+  <main>
+
+    <section class="console" id="console">
+
+      <div class="orb-stage" aria-hidden="true">
+        <div class="orb-glow" id="orbGlow"></div>
+        <div class="orb" id="orb">
+          <span class="orb-emoji" id="orbEmoji">✎</span>
+        </div>
+      </div>
+
+      <div class="input-panel">
+        <label class="eyebrow" for="textInput">INPUT</label>
+        <textarea
+          id="textInput"
+          maxlength="2000"
+          rows="4"
+          spellcheck="true"
+          aria-describedby="charCountLabel"
+          placeholder="Write a sentence and let it speak for itself&#10;— e.g. “I can't believe we actually pulled this off.”"
+        ></textarea>
+
+        <div class="examples" id="examples">
+          <span class="examples-label">try</span>
+          <button type="button" class="chip" data-text="I feel so happy and light today.">joy</button>
+          <button type="button" class="chip" data-text="I feel tender towards her in a way I cannot explain.">tenderness</button>
+          <button type="button" class="chip" data-text="They cancelled it again without telling anyone.">frustration</button>
+          <button type="button" class="chip" data-text="I finally got the job and I cannot stop smiling.">off-script</button>
+        </div>
+
+        <div class="input-footer">
+          <span class="char-count" id="charCountLabel"><span id="charCount">0</span> / 2000</span>
+          <button id="analyzeBtn" class="btn-primary" disabled>
+            <span class="btn-label">Read the mood</span>
+            <span class="btn-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+
+        <p class="error-msg" id="errorMsg" role="alert" hidden></p>
+      </div>
+
+    </section>
+
+    <section class="result" id="resultSection" aria-live="polite" hidden>
+
+      <div class="reveal">
+        <span class="eyebrow">DETECTED</span>
+        <div class="reveal-main">
+          <span class="reveal-emoji" id="emotionEmoji" aria-hidden="true">😄</span>
+          <h1 id="emotionWord">Joy</h1>
+        </div>
+        <span class="confidence-mono" id="confidenceText">92.4% confidence</span>
+        <p class="caveat" id="caveat" hidden></p>
+        <blockquote class="echoed-text" id="echoedText"></blockquote>
+      </div>
+
+      <div class="breakdown">
+        <span class="eyebrow">BREAKDOWN</span>
+        <div class="bars" id="barsContainer"></div>
+        <dl class="facts" id="facts"></dl>
+      </div>
+
+    </section>
+
+    <section class="history" id="historySection" hidden>
+      <span class="eyebrow">THIS SESSION</span>
+      <ul class="history-list" id="historyList"></ul>
+    </section>
+
+  </main>
+
+  <footer class="footbar">
+    <span id="serverStatusText">connecting to model…</span>
+    <span class="footbar-hint">
+      <kbd>⌘</kbd><kbd>↵</kbd> to analyze · <a href="/docs">API</a>
+    </span>
+  </footer>
+
+</div>
+
+<script src="/static/script.js" defer></script>
+</body>
+</html>

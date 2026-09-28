@@ -1,0 +1,25 @@
+# Render blueprint. `runtime.txt` pins the Python version for buildpack-style hosts.
+services:
+  - type: web
+    name: moodline
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /ready
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      # One worker: the model is loaded per process, so every extra worker costs
+      # another ~250 MB of RSS. Scale with instances, not workers.
+      - key: MOODLINE_TORCH_THREADS
+        value: "2"
+      - key: OMP_NUM_THREADS
+        value: "2"
+      - key: MOODLINE_LOG_JSON
+        value: "true"
+      - key: MOODLINE_RATE_LIMIT_PER_MINUTE
+        value: "120"
+      # Lock the browser UI to your own domain in production:
+      # - key: MOODLINE_CORS_ORIGINS
+      #   value: "https://moodline.example.com"

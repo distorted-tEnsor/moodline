@@ -1,0 +1,31 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+
+.env
+.DS_Store
+.idea/
+.vscode/
+
+# Local datasets and run outputs
+data/
+artifacts/training_report.json
+artifacts/*_report.json
+
+# Legacy training artifacts (42 MB). Keep them out of git; they are inputs to
+# scripts/convert_keras_to_pytorch.py, not to the service.
+artifacts/*.keras
+artifacts/*.pkl
+artifacts/*.onnx
+
+# artifacts/emotion_bigru.pt (14 MB) IS tracked -- the service cannot start
+# without it. If your host dislikes binaries in git, use Git LFS:
+#     git lfs track "artifacts/*.pt"
